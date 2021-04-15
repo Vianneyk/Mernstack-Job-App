@@ -37,6 +37,7 @@ function App() {
 	return (
 		<div>
 			<h2>Welcome to my MERN Job app</h2>
+
 			<form onSubmit={handleSubmit}>
 				<div className="form-input">
 					<input
