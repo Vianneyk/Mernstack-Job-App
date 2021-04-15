@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-
-// Schema
 const Schema = mongoose.Schema;
+
 const JobPostSchema = new Schema({
 	title: { type: String, required: true },
 	skills: { type: String, required: true },
@@ -15,7 +14,6 @@ const JobPostSchema = new Schema({
 	},
 });
 
-// Model
 const JobPost = mongoose.model("JobPost", JobPostSchema);
 
 module.exports = JobPost;
