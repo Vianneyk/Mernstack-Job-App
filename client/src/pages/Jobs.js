@@ -20,6 +20,13 @@ const Job = () => {
 		setsearch(e.target.value);
 	};
 
+	const handleApplyClick = (link) =>{
+		window.open(link, "_blank")
+	};
+	//not functional
+	const handleSaveClick = (link) => {
+		window.open(link, "_blank")
+	}
 	return (
 		<div>
 			<div>
@@ -31,7 +38,10 @@ const Job = () => {
 			<div>
 				<ul>
 					{jobs.map((job, index) => {
-						return <li key={index}>{job.title}</li>;
+						return <li key={index}>{job.title}
+						<button onClick ={() => handleApplyClick(job.company_url)}>Apply</button>
+						<button onClick ={() => handleSaveClick()}>Save</button>
+						</li>;
 					})}
 				</ul>
 			</div>
