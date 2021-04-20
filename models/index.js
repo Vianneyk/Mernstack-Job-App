@@ -1,3 +1,5 @@
+const Job = require("./job");
+
 module.exports = {
-	JobPost: require("./jobPost"),
+	Job,
 };
