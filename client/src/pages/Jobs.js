@@ -12,7 +12,7 @@ const Job = () => {
 		e.preventDefault();
 
 		findJobs(search)
-			.then(response => setJobs(response))
+			.then(({data}) => setJobs(data))
 			.catch(err => console.log(err));
 	};
 
