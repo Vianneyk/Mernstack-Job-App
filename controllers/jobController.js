@@ -13,7 +13,7 @@ module.exports = {
 			.then(response => res.json(response))
 			.catch(err => res.status(422).json(err));
 	},
-	fundAll: function (req, res) {
+	findAll: function (req, res) {
 		Job.find({})
 			.then(response => res.json(response))
 			.catch(err => res.status(422).json(err));
