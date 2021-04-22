@@ -5,7 +5,7 @@ module.exports = {
 		const { search } = req.query;
 
 		axios
-			.get("https://jobs.github.com/positions.json?markdown=true&location=united+kingdom", {
+			.get("https://jobs.github.com/positions.json?markdown=true&location=europe", {
 				params: search,
 			})
 			.then(response => {

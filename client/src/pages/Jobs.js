@@ -1,12 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import API from "../utils/API";
 
 const { findJobs } = API;
 
 const Job = () => {
-	const [search, setsearch] = useState("I'm tired");
+	const [search, setSearch] = useState("");
 	const [jobs, setJobs] = useState([]);
+
+	// useEffect(() => {
+	// 	loadJobs()
+	//   }, [])
+	
+	//   function loadJobs() {
+	// 	API.findJobs()
+	// 	  .then(res => 
+	// 		setJobs(res.data)
+	// 	  )
+	// 	  .catch(err => console.log(err));
+	//   };
 
 	const handleSubmit = e => {
 		e.preventDefault();
@@ -17,7 +30,7 @@ const Job = () => {
 	};
 
 	const handleChange = e => {
-		setsearch(e.target.value);
+		setSearch(e.target.value);
 	};
 
 	const handleApplyClick = (link) =>{
