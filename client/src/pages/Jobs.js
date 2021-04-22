@@ -38,10 +38,16 @@ const Job = () => {
 			<div>
 				<ul>
 					{jobs.map((job, index) => {
-						return <li key={index}>{job.title}
-						<button onClick ={() => handleApplyClick(job.company_url)}>Apply</button>
+						return <div> <li key={index}>{job.title}
+						<a href = {job.company_url}>
+						<img src = {job.company_logo} width= "200px" alt ="company logo"/>
+						</a>
+						<p>{job.location}</p>
+						<p>{job.description}</p>
+						<button onClick ={() => handleApplyClick(job.url)}>Apply</button>
 						<button onClick ={() => handleSaveClick()}>Save</button>
-						</li>;
+						</li>
+						</div>;
 					})}
 				</ul>
 			</div>
