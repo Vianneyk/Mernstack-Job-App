@@ -5,11 +5,15 @@ import Home from "./pages/Home";
 import Jobs from "./pages/Jobs";
 import Post from "./pages/Post";
 import Blog from "./pages/Blog";
+import Nav from "./components/Nav";
+import Auth0ProviderWithHistory from "./auth0Provider";
 
 function App() {
 	return (
+		<Auth0ProviderWithHistory>
 		<Router>
 			<div>
+				<Nav />
 				<Switch>
 					<Route exact path="/" component={Home} />
 					<Route exact path="/jobs" component={Jobs} />
@@ -18,6 +22,8 @@ function App() {
 				</Switch>
 			</div>
 		</Router>
+		</Auth0ProviderWithHistory>
+
 	);
 }
 

@@ -57,7 +57,7 @@ const Job = () => {
 						</a>
 						<p>{job.location}</p>
 						<p>{job.description}</p>
-						<button onClick ={() => handleApplyClick(job.url)}>Apply</button>
+						<button onClick ={() => handleApplyClick(job.how_to_apply)}>Apply</button>
 						<button onClick ={() => handleSaveClick()}>Save</button>
 						</li>
 						</div>;
