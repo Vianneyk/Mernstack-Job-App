@@ -6,6 +6,7 @@ import Jobs from "./pages/Jobs";
 import Post from "./pages/Post";
 import Blog from "./pages/Blog";
 import Nav from "./components/Nav";
+import Profile from "./pages/Profile";
 import Auth0ProviderWithHistory from "./auth0Provider";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
 					<Route exact path="/jobs" component={Jobs} />
 					<Route exact path="/post" component={Post} />
 					<Route exact path="/blog" component={Blog} />
+					<Route exact path="/profile" component={Profile} />
 				</Switch>
 			</div>
 		</Router>
