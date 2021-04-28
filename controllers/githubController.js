@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 module.exports = {
-	search: async (req, res) => {
+	findAll: async (req, res) => {
 		try {
 			let { description = "", full_time, location = "", page = 1 } = req.query;
 
@@ -20,5 +20,3 @@ module.exports = {
 		}
 	},
 };
-
-// need to test the api
