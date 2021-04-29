@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const path = require("path");
@@ -12,6 +13,7 @@ const PORT = process.env.PORT || 8080;
 // Data parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static("client/build"));
