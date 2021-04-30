@@ -42,7 +42,7 @@ const Search = () => {
 								type="text"
 								name="description"
 								value={state.description || ""}
-								placeholder="Enter search term"
+								placeholder="Enter Keywords"
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
@@ -53,7 +53,7 @@ const Search = () => {
 								type="text"
 								name="location"
 								value={state.location || ""}
-								placeholder="Enter location"
+								placeholder="Enter Location"
 								onChange={handleInputChange}
 							/>
 						</Form.Group>
