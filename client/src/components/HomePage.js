@@ -10,6 +10,8 @@ import Results from "./Results";
 import JobDetails from "./JobDetails";
 import JobsContext from "../context/jobs";
 import Loader from "./Loader";
+import Navbar from "./Navbar";
+import { BrowserRouter as Router } from "react-router-dom";
 
 const HomePage = props => {
 	const [results, setResults] = useState([]);
@@ -85,35 +87,38 @@ const HomePage = props => {
 	};
 
 	return (
-		<JobsContext.Provider value={value}>
-			<Loader show={isLoading}>Loading...</Loader>
-			<div className={`${page === "details" && "hide"}`}>
-				<Header />
-				<Search />
-				{!_.isEmpty(errors) && (
-					<div className="errorMsg">
-						<p>{errors.error}</p>
-					</div>
-				)}
-				<Results />
-				{results.length > 0 && _.isEmpty(errors) && !hideLoadMore && (
-					<div
-						className="load-more"
-						onClick={isLoading ? null : handleLoadMore}
-					>
-						<button
-							disabled={isLoading}
-							className={`${isLoading ? "disabled" : ""}`}
+		<Router>
+			<Navbar />
+			<JobsContext.Provider value={value}>
+				<Loader show={isLoading}>Loading...</Loader>
+				<div className={`${page === "details" && "hide"}`}>
+					<Header />
+					<Search />
+					{!_.isEmpty(errors) && (
+						<div className="errorMsg">
+							<p>{errors.error}</p>
+						</div>
+					)}
+					<Results />
+					{results.length > 0 && _.isEmpty(errors) && !hideLoadMore && (
+						<div
+							className="load-more"
+							onClick={isLoading ? null : handleLoadMore}
 						>
-							Load More Jobs
-						</button>
-					</div>
-				)}
-			</div>
-			<div className={`${page === "home" && "hide"}`}>
-				{page === "details" && <JobDetails />}
-			</div>
-		</JobsContext.Provider>
+							<button
+								disabled={isLoading}
+								className={`${isLoading ? "disabled" : ""}`}
+							>
+								Load More Jobs
+							</button>
+						</div>
+					)}
+				</div>
+				<div className={`${page === "home" && "hide"}`}>
+					{page === "details" && <JobDetails />}
+				</div>
+			</JobsContext.Provider>
+		</Router>
 	);
 };
 
