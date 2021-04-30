@@ -1,9 +1,9 @@
 const router = require("express").Router();
 
-const jobRoutes = require("./jobs");
+const reviewRoutes = require("./reviews");
 const githubRoutes = require("./github");
 
-router.use("/jobs", jobRoutes);
+router.use("/reviews", reviewRoutes);
 router.use("/github", githubRoutes);
 
 module.exports = router;
