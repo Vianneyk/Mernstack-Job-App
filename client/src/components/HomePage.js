@@ -10,8 +10,10 @@ import Results from "./Results";
 import JobDetails from "./JobDetails";
 import JobsContext from "../context/jobs";
 import Loader from "./Loader";
-import Navbar from "./Navbar";
-import { BrowserRouter as Router } from "react-router-dom";
+// import Navbar from "./Navbar";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+// import Reviews from "./Reviews";
+// import Landing from "./Landing";
 
 const HomePage = props => {
 	const [results, setResults] = useState([]);
@@ -88,7 +90,8 @@ const HomePage = props => {
 
 	return (
 		<Router>
-			<Navbar />
+			{/* <Navbar />
+			<Route exact path ="/reviews" component={Reviews} /> */}
 			<JobsContext.Provider value={value}>
 				<Loader show={isLoading}>Loading...</Loader>
 				<div className={`${page === "details" && "hide"}`}>

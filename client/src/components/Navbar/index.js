@@ -1,41 +1,42 @@
 import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import {
-	Nav,
-	NavLink,
-	Bars,
-	NavMenu,
-	NavBtn,
-	NavBtnLink,
+  Nav,
+  NavLink,
+  Bars,
+  NavMenu,
+  NavBtn,
+  NavBtnLink,
 } from "./NavbarElement";
 
 const Navbar = () => {
-	return (
-		<>
-			<Nav>
-				<NavLink to="/">
-					<h1>Logo</h1>
-				</NavLink>
-				<Bars />
-				<NavMenu>
-					<NavLink to="/jobs" activeStyle>
-						Find jobs
-					</NavLink>
-					<NavLink to="/post-jobs" activeStyle>
-						Post Jobs
-					</NavLink>
-					<NavLink to="/blog" activeStyle>
-						Blog
-					</NavLink>
-					<NavLink to="/sign-up" activeStyle>
-						Sign Up
-					</NavLink>
-				</NavMenu>
-				<NavBtn>
-					<NavBtnLink to="/signin">Sign In</NavBtnLink>
-				</NavBtn>
-			</Nav>
-		</>
-	);
+  const { loginWithRedirect, logout, user, isLoading } = useAuth0();
+  return (
+    <>
+      <Nav>
+        <NavLink to="/">
+          <h1>MERN Stack Job App</h1>
+        </NavLink>
+        <Bars />
+        <NavMenu>
+          <NavLink to="/jobs" activeStyle>
+            Find jobs
+          </NavLink>
+          {/* <NavLink to="/reviews" activeStyle>
+            Reviews
+          </NavLink> */}
+
+          {!isLoading && !user && (
+            <button className= "btn btn-primary" onClick={() => loginWithRedirect()}>login</button>
+          )}
+
+          {!isLoading && user && (
+            <button className= "btn btn-primary" onClick={() => logout()}>logout</button>
+          )}
+        </NavMenu>
+      </Nav>
+    </>
+  );
 };
 
 export default Navbar;

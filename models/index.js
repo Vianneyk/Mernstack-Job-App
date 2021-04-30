@@ -1,5 +1,5 @@
-const Job = require("./job");
+const Review = require("./review");
 
 module.exports = {
-	Job,
+	Review,
 };
