@@ -36,7 +36,7 @@ function Reviews() {
 
   function handleFormSubmit(event) {
     event.preventDefault();
-    if (formObject.title && formObject.author) {
+    if (formObject.name && formObject.company_name && formObject.description) {
       api.saveReview({
         name: formObject.name,
         company_name: formObject.company_name,
@@ -83,7 +83,7 @@ function Reviews() {
                 placeholder="How was it like working at the company?"
               />
               <FormBtn
-                // disabled={!(formObject.author && formObject.title)}
+                disabled={!(formObject.name && formObject.company_name)}
                 onClick={handleFormSubmit}
               >
                 Submit Review
@@ -98,11 +98,13 @@ function Reviews() {
               <List>
                 {reviews.map(review => (
                   <ListItem key={review._id}>
-                    <Link to={"/reviews/" + review._id}>
-                      <strong>
-                        {review.company_name} by {review.name}
-                      </strong>
-                    </Link>
+                      <div>
+                        <h2>Company name: {review.company_name}</h2>
+                        <h3>Username: {review.name}</h3>
+                        <h4>Job Role: {review.job_role}</h4>
+                        <h5>Location: {review.location}</h5>
+                        <p>Review: {review.description}</p>
+                      </div>
                     <DeleteBtn onClick={() => deleteReview(review._id)} />
                   </ListItem>
                 ))}
