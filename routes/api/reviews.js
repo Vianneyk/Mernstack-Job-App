@@ -1,39 +1,16 @@
 const router = require("express").Router();
+const reviewsController = require("../../controllers/reviewController");
 
-// const reviewController = require("../../controllers/reviewController");
-const Review = require("../../models/review");
+// Matches with "/api/reviews"
+router.route("/")
+  .get(reviewsController.findAll)
+  .post(reviewsController.create);
 
-// router.route("/").get(reviewController.findAll).post(reviewController.create);
-
-// router.route("/:id").delete(reviewController.delete);
-
-router.get('/', (req, res) => {
-
-    Review.find({  })
-        .then((data) => {
-            console.log('Data: ', data);
-            res.json(data);
-        })
-        .catch((error) => {
-            console.log('error: ', error);
-        });
-});
-
-router.post('/save', (req, res) => {
-    const data = req.body;
-
-    const newReview = new Review(data);
-
-    newReview.save((error) => {
-        if (error) {
-            res.status(500).json({ msg: 'Sorry, internal server errors' });
-            return;
-        }
-        // Review
-        return res.json({
-            msg: 'Your data has been saved!!!!!!'
-        });
-    });
-});
+// Matches with "/api/reviews/:id"
+router
+  .route("/:id")
+  .get(reviewsController.findById)
+  .put(reviewsController.update)
+  .delete(reviewsController.remove);
 
 module.exports = router;

@@ -1,178 +1,120 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import DeleteBtn from "../components/DeleteBtn";
+import Jumbotron from "../components/Jumbotron";
+import api from "../utils/api";
+import { Link } from "react-router-dom";
+import { Col, Row, Container } from "../components/Grid";
+import { List, ListItem } from "../components/List";
+import { Input, TextArea, FormBtn } from "../components/Form";
 
+function Reviews() {
+  const [reviews, setReviews] = useState([])
+  const [formObject, setFormObject] = useState({})
 
-// import './App.css';
+  useEffect(() => {
+    loadReviews()
+  }, [])
 
-// name: { type: String, required: true },
-// 	company_name: { type: String, required: true },
-// 	job_role: { type: String, required: true },
-// 	location: { type: String, required: true },
-// 	description: { type: String, required: true },
-
-class App extends React.Component {
-
-  state = {
-    name: '',
-    company_name: '',
-    job_role: '',
-    location: '',
-    description: '',
-    reviews: []
+  function loadReviews() {
+    api.getReviews()
+      .then(res => 
+        setReviews(res.data)
+      )
+      .catch(err => console.log(err));
   };
 
-  componentDidMount = () => {
-    this.getReview();
-  };
-
-
-  getReview = () => {
-    axios.get('/api')
-      .then((response) => {
-        const data = response.data;
-        this.setState({ reviews: data });
-        console.log('Data has been received!!');
-      })
-      .catch(() => {
-        alert('Error retrieving data!!!');
-      });
+  function deleteReview(id) {
+    api.deleteReview(id)
+      .then(res => loadReviews())
+      .catch(err => console.log(err));
   }
 
-  handleChange = ({ target }) => {
-    const { name, value } = target;
-    this.setState({ [name]: value });
+  function handleInputChange(event) {
+    const { name, value } = event.target;
+    setFormObject({...formObject, [name]: value})
   };
 
-
-  submit = (event) => {
+  function handleFormSubmit(event) {
     event.preventDefault();
-
-    const payload = {
-      name: this.state.name,
-      company_name: this.state.company_name,
-      job_role: this.state.job_role,
-      location: this.state.location,
-      description: this.state.description,
-    };
-
-
-    axios({
-      url: '/api/save',
-      method: 'POST',
-      data: payload
-    })
-      .then(() => {
-        console.log('Data has been sent to the server');
-        this.resetUserInputs();
-        this.getReview();
+    if (formObject.title && formObject.author) {
+      api.saveReview({
+        name: formObject.name,
+        company_name: formObject.company_name,
+        job_role: formObject.job_role,
+        location: formObject.location,
+        description: formObject.description
       })
-      .catch(() => {
-        console.log('Internal server error');
-      });;
+        .then(res => loadReviews())
+        .catch(err => console.log(err));
+    }
   };
 
-  resetUserInputs = () => {
-    this.setState({
-      name: '',
-      company_name: '',
-      job_role: '',
-      location: '',
-      description: '',
-    });
-  };
-
-  displayReview = (reviews) => {
-
-    if (!reviews.length) return null;
-
-
-    return reviews.map((review, index) => (
-      <div key={index} className="reviews__display">
-        <h3>{review.company_name}</h3>
-        <h4>{review.name}</h4>
-        <h5>{review.job_role}</h5>
-        <h6>{review.location}</h6>
-        <p>{review.description}</p>
-      </div>
-    ));
-  };
-
-  render() {
-
-    console.log('State: ', this.state);
-
-    //JSX
-    return(
-      <div className="app">
-        <h2>Welcome to the best app ever</h2>
-        <form onSubmit={this.submit}>
-          <div className="form-input">
-            <input 
-              type="text"
-              name="name"
-              placeholder="Enter your name or alias"
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="form-input">
-            <input
-              placeholder="Enter the company name here"
-              type= "text"
-              name="body"
-              cols="30"
-              rows="10"
-              value={this.state.company_name}
-              onChange={this.handleChange}
-            >  
-            </input>
-          </div>
-
-          <div className="form-input">
-            <input
-              placeholder="Enter job role here"
-              name="body"
-              cols="30"
-              rows="10"
-              value={this.state.job_role}
-              onChange={this.handleChange}
-            >  
-            </input>
-          </div>
-          <div className="form-input">
-            <input
-              placeholder="What city is the office located in?"
-              name="body"
-              cols="30"
-              rows="10"
-              value={this.state.location}
-              onChange={this.handleChange}
-            >  
-            </input>
-          </div>
-
-          <div className="form-input">
-            <input
-              placeholder="Enter review here ..."
-              name="body"
-              cols="30"
-              rows="10"
-              value={this.state.description}
-              onChange={this.handleChange}
-            >  
-            </input>
-          </div>
-
-          <button>Submit</button>
-        </form>
-
-        <div className="blog-">
-          {this.displayReview(this.state.reviews)}
-        </div>
-      </div>
+    return (
+      <Container fluid>
+        <Row>
+          <Col size="md-6">
+            <Jumbotron>
+              <h1>Add your review here</h1>
+            </Jumbotron>
+            <form>
+              <Input
+                onChange={handleInputChange}
+                name="name"
+                placeholder="Enter your name or alias here (required)"
+              />
+              <Input
+                onChange={handleInputChange}
+                name="company_name"
+                placeholder="Enter name of company here (required)"
+              />
+              <Input
+                onChange={handleInputChange}
+                name="job_role"
+                placeholder="Enter your poisition here"
+              />
+              <Input
+                onChange={handleInputChange}
+                name="location"
+                placeholder="What city is the office located at?"
+              />
+              <TextArea
+                onChange={handleInputChange}
+                name="description"
+                placeholder="How was it like working at the company?"
+              />
+              <FormBtn
+                // disabled={!(formObject.author && formObject.title)}
+                onClick={handleFormSubmit}
+              >
+                Submit Review
+              </FormBtn>
+            </form>
+          </Col>
+          <Col size="md-6 sm-12">
+            <Jumbotron>
+              <h1>Reviews</h1>
+            </Jumbotron>
+            {reviews.length ? (
+              <List>
+                {reviews.map(review => (
+                  <ListItem key={review._id}>
+                    <Link to={"/reviews/" + review._id}>
+                      <strong>
+                        {review.company_name} by {review.name}
+                      </strong>
+                    </Link>
+                    <DeleteBtn onClick={() => deleteReview(review._id)} />
+                  </ListItem>
+                ))}
+              </List>
+            ) : (
+              <h3>No Results to Display</h3>
+            )}
+          </Col>
+        </Row>
+      </Container>
     );
   }
-}
 
 
-export default App;
+export default Reviews;
