@@ -1,22 +1,37 @@
 const db = require("../models");
 
-// const { Review } = db;
-
+// Defining methods for the ReviewsController
 module.exports = {
-	create: function (req, res) {
-		db.Review.create(req.body)
-			.then(response => res.json(response))
-			.catch(err => res.status(422).json(err));
-	}
-	// ,
-	// delete: function (req, res) {
-	// 	db.Review.findByIdAndDelete(req.params.id)
-	// 		.then(response => res.json(response))
-	// 		.catch(err => res.status(422).json(err));
-	// },
-	// findAll: function (req, res) {
-	// 	db.Review.find({})
-	// 		.then(response => res.json(response))
-	// 		.catch(err => res.status(422).json(err));
-	// },
+  findAll: function(req, res) {
+    db.Review
+      .find(req.query)
+      .sort({ date: -1 })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  findById: function(req, res) {
+    db.Review
+      .findById(req.params.id)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  create: function(req, res) {
+    db.Review
+      .create(req.body)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  update: function(req, res) {
+    db.Review
+      .findOneAndUpdate({ _id: req.params.id }, req.body)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  remove: function(req, res) {
+    db.Review
+      .findById({ _id: req.params.id })
+      .then(dbModel => dbModel.remove())
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  }
 };

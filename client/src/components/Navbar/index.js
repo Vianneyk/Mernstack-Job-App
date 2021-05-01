@@ -22,9 +22,9 @@ const Navbar = () => {
           <NavLink to="/jobs" activeStyle>
             Find jobs
           </NavLink>
-          {/* <NavLink to="/reviews" activeStyle>
+          <NavLink to="/reviews" activeStyle>
             Reviews
-          </NavLink> */}
+          </NavLink>
 
           {!isLoading && !user && (
             <button className= "btn btn-primary" onClick={() => loginWithRedirect()}>login</button>
